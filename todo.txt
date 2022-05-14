@@ -1,0 +1,5 @@
+1. Add "Nobody in frame" functionality
+2. Combine with EAR code
+3. Add audio feedback for user when user is detected as tired
+4. Integrate with voice NLTK for understanding repsonses
+5. connect everything with webserver
