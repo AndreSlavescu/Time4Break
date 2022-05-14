@@ -21,4 +21,5 @@ python drowsy.py
 - FPS counter
 
 ### Examples:
-<img src="https://github.com/AndreSlavescu/Time4Break/docs/nose_pose_example.gif?raw=true" width="300px">
+- Nose pose estimation
+<img src="https://github.com/AndreSlavescu/Time4Break/blob/andre/docs/nose_pose_example.gif?raw=true" width="500px">
