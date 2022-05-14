@@ -3,6 +3,9 @@ import mediapipe as mp
 import cv2
 import time
 from sqlalchemy import false
+from sympy import not_empty_in
+from playsound import playsound
+
 
 from scipy.spatial import distance as dis
 
@@ -74,8 +77,13 @@ drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 cap = cv2.VideoCapture(0)
 
 frame_count = 0
-min_tolerance = 7.0
+#CHANGE THIS TO CHANGE SENSITIVITY
+#LOWER = MORE SENSITIVE
+min_tolerance = 6.0
 min_frame = 6
+
+counter1 = 0
+counter2 = 0
 
 with mp_face_mesh.FaceMesh(
     max_num_faces=1,
@@ -96,8 +104,6 @@ with mp_face_mesh.FaceMesh(
 
     # font which we will be using to display FPS
     font = cv2.FONT_HERSHEY_SIMPLEX
-    # time when we finish processing for this frame
-
 
     success, image = cap.read()
     if not success:
@@ -133,12 +139,30 @@ with mp_face_mesh.FaceMesh(
         frame_count +=1
     else:
         frame_count = 0
-                    
+    
     if frame_count > min_frame:
         #Closing the eyes
-        print("It works")
+        counter2 = 0
+        print(counter1)
+        counter1 += 1
+        if counter1 >= 250:
+            playsound('pog.mp3')
+            print(counter1)
+            counter1 = 0
+            
+        #print("It works")
+    else:
+        counter2 += 1
+        if counter2 >= 100:
+            times = time.time()
+            print(times)
+            counter1 = 0
+            counter2 = 0
+            
+
+
         
-    print("Ratio: ", ratio)
+    #print("Ratio: ", ratio)
 
     # Draw the face mesh annotations on the image.
     image.flags.writeable = True
@@ -173,7 +197,7 @@ with mp_face_mesh.FaceMesh(
     fps = int(fps)
     fps = str(fps)
     fpsImage = cv2.putText(image, f"fps = {fps}", (7, 70), font, 3, (100, 255, 0), 3, cv2.LINE_AA)
-    print(fps)
+    #print(fps)
     # Flip the image horizontally for a selfie-view display.
     cv2.imshow('MediaPipe Face Mesh', fpsImage)
     if cv2.waitKey(1) & 0xFF == ord('q'):
