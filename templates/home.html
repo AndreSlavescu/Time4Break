@@ -1,0 +1,136 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/styles/style.css" />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <title>Home Page</title>
+  </head>
+  <body>
+    <div class="Title">Time 4 Break</div>
+    <!-- <button><a href="/login">Login/Register </a></button> -->
+    <script>
+      function createPopupWin(
+        pageURL,
+        pageTitle,
+        popupWinWidth,
+        popupWinHeight
+      ) {
+        var left = (screen.width - popupWinWidth) / 2;
+        var top = (screen.height - popupWinHeight) / 4;
+
+        var myWindow = window.open(
+          pageURL,
+          pageTitle,
+          "resizable=yes, width=" +
+            popupWinWidth +
+            ", height=" +
+            popupWinHeight +
+            ", top=" +
+            top +
+            ", left=" +
+            left
+        );
+      }
+      /////////////////////////////////////
+    </script>
+    <div class="Login">
+      <button
+        type="button"
+        class="btn btn-info"
+        onclick="createPopupWin('/login', 'Login', 500, 500)"
+        id="loginButton"
+      >
+        Login
+      </button>
+    </div>
+    <div class="Logout">
+      <button
+        type="button"
+        class="btn btn-info"
+        onclick="logoutOfApp()"
+        id="logoutButton"
+      >
+        Logout
+      </button>
+    </div>
+
+    <br /><br />
+    <div class="paragraph">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod,
+        nisl eu blandit consectetur, nisl nunc consectetur nisi, euismod aliquam
+        nisl nunc euismod nisi. Donec euismod, nisl eu blandit consectetur, nisl
+        nunc consectetur nisi, euismod aliquam nisl
+      </p>
+    </div>
+    <div class="Guest">
+      <button type="button" class="btn btn-info" onClick="redirectToApp()">
+        Continue to App
+      </button>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+
+    <!-- member plugins -->
+    <script src="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
+    <script>
+      // firebase config
+      var config = {
+        apiKey: "AIzaSyCFus5s9f9JSygMC9l6oKgy2NndG5SFwHc",
+        authDomain: "time4break-b3569.firebaseapp.com",
+        projectId: "time4break-b3569",
+        storageBucket: "time4break-b3569.appspot.com",
+        messagingSenderId: "184415951680",
+        appId: "1:184415951680:web:75504dfc735192f6b0f8a5",
+        measurementId: "G-Q2N70XDRK7",
+      };
+      firebase.initializeApp(config);
+
+      /////////////////////////////////////
+
+      /**********************\
+         * Check login status *
+        \**********************/
+
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          console.log(user);
+          // get the element with id of loginButton and set its display to none
+          document.getElementById("loginButton").style.display = "none";
+          // get the element with id of logoutButton and set its display to block
+          document.getElementById("logoutButton").style.display = "block";
+        } else {
+          // get the element with id of loginButton and set its display to block
+          document.getElementById("loginButton").style.display = "block";
+          // get the element with id of logoutButton and set its display to none
+          document.getElementById("logoutButton").style.display = "none";
+        }
+      });
+      function logoutOfApp() {
+        alert("Successfully logged out!");
+        firebase.auth().signOut();
+      }
+      function redirectToApp() {
+        window.location.href = "/appPage";
+      }
+    </script>
+  </body>
+</html>
