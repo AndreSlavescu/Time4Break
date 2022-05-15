@@ -33,9 +33,9 @@
         <ul id="suggestions"></ul>
       </div>
       <div class="Video-Box">
-        <h3>Current Drowsniess: {{X}}%</h3>
+        <h3 id="current_state">Current State: Awake</h3>
         <br />
-        <h3>Current Suggestion: {{suggestion}}</h3>
+        <h3 id="current_sugg">Current Suggestion: None</h3>
         <br />
         <video id="video" width="600" height="300" autoplay></video>
         <div class="button">
@@ -80,13 +80,11 @@
             //some more user data
           });
       }
-
       let userId = null;
       firebase.auth().onAuthStateChanged(function (user) {
-        console.log("RUNNING");
         if (user) {
           userId = user.uid;
-          getSuggestions(user);
+          getSuggestions(userId);
           //   var userId = user.uid
           //   firebase
           //     .database()
@@ -102,21 +100,64 @@
         }
       });
 
+      setInterval(() => {
+        console.log("IN INTERVAL");
+        if (userId) {
+          getSuggestions(userId);
+          getState();
+          getCurrentSuggestion();
+        }
+      }, 10000);
+
+      var suggestions = [];
+
       function startVideo() {
         isStart = !isStart;
         document.getElementById("startButton").innerHTML = isStart
           ? "Stop"
           : "Start";
       }
-      function getSuggestions(user) {
-        var userId = user.uid;
+      function getState() {
+        var starCountRef = firebase.database().ref("state");
+        starCountRef.on("value", (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            document.getElementById("current_state").innerHTML =
+              "Current State: " + data;
+          }
+        });
+      }
+      async function getCurrentSuggestion() {
+        var starCountRef = firebase.database().ref("currentSuggestion");
+        await getSuggestions(userId);
+        starCountRef.on("value", (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            document.getElementById("current_sugg").innerHTML =
+              "Current Suggestion: " + data;
+          }
+          if (suggestions.includes(data)) {
+            console.log("Already Exists");
+          } else {
+            firebase
+              .database()
+              .ref("users/" + userId)
+              .set({
+                suggestions: [...suggestions, data],
+                //some more user data
+              });
+          }
+        });
+        getSuggestions(userId);
+      }
+      async function getSuggestions(userId) {
         firebase
           .database()
           .ref("users/" + userId)
           .once("value")
           .then(function (snapshot) {
-            var suggestions = snapshot.val().suggestions;
-            console.log(suggestions);
+            suggestions = snapshot.val().suggestions;
+            $("#suggestions").empty();
             var list = document.getElementById("suggestions");
             for (var i = 0; i < suggestions.length; i++) {
               var item = document.createElement("li");

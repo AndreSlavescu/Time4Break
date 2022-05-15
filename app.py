@@ -11,7 +11,7 @@ def index():
 
 @app.route('/appPage')
 def appPage():
-    return render_template("app.html", X = "90", suggestion = "Testing")
+    return render_template("app.html", X = "Awake", suggestion = "Testing")
 
 @app.route('/login')
 def login():
