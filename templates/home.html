@@ -110,6 +110,9 @@
       /**********************\
          * Check login status *
         \**********************/
+      firebase.database().ref("/startState/").set({
+        startState: "stop",
+      });
 
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
