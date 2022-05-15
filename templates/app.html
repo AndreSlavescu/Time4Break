@@ -78,14 +78,6 @@
         if (user) {
           userId = user.uid;
           getSuggestions(userId);
-          //   var userId = user.uid
-          //   firebase
-          //     .database()
-          //     .ref("users/" + userId)
-          //     .set({
-          //       suggestions: ["Get more sleep"],
-          //       //some more user data
-          //     });
         } else {
           // Set the contents of the div with the id suggestions to say "Log in to view past suggestions"
           document.getElementById("suggestions").innerHTML =
