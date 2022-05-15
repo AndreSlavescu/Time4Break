@@ -93,26 +93,12 @@
     <!-- member plugins -->
     <script src="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
     <script>
-      // firebase config
-      var config = {
-        apiKey: "AIzaSyCFus5s9f9JSygMC9l6oKgy2NndG5SFwHc",
-        authDomain: "time4break-b3569.firebaseapp.com",
-        projectId: "time4break-b3569",
-        storageBucket: "time4break-b3569.appspot.com",
-        messagingSenderId: "184415951680",
-        appId: "1:184415951680:web:75504dfc735192f6b0f8a5",
-        measurementId: "G-Q2N70XDRK7",
-      };
-      firebase.initializeApp(config);
 
       /////////////////////////////////////
 
       /**********************\
          * Check login status *
         \**********************/
-      firebase.database().ref("/startState/").set({
-        startState: "stop",
-      });
 
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -135,6 +121,23 @@
       function redirectToApp() {
         window.location.href = "/appPage";
       }
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    <script src="/static/functions.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        if (!userId) {
+          initializeFirebase();
+        }
+        if (userId) {
+          firebase
+          .database()
+          .ref("/startState/")
+          .set({
+            startState: "stop",
+          });
+        }
+      }, false);
     </script>
   </body>
 </html>
