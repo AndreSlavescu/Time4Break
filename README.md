@@ -22,4 +22,4 @@ python drowsy.py
 
 ### Examples:
 - Nose pose estimation
-<img src="https://github.com/AndreSlavescu/Time4Break/blob/andre/docs/nose_pose_example.gif?raw=true" width="500px">
+<img src="https://github.com/AndreSlavescu/Time4Break/blob/main/docs/drowsygif.gif?raw=true" width="500px">
