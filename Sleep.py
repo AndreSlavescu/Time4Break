@@ -9,6 +9,19 @@ from playsound import playsound
 
 from scipy.spatial import distance as dis
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
+# Fetch the service account key JSON file contents
+cred = credentials.Certificate('configtest.json')
+# Initialize the app with a service account, granting admin privileges
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://time4break-b3569-default-rtdb.firebaseio.com/'
+})
+
+ref = db.reference('/')
+
 
 def draw_landmarks(image, outputs, land_mark, color):
     height, width =image.shape[:2]
@@ -84,6 +97,7 @@ min_frame = 6
 
 counter1 = 0
 counter2 = 0
+counter3 = 0
 
 with mp_face_mesh.FaceMesh(
     max_num_faces=1,
@@ -140,6 +154,7 @@ with mp_face_mesh.FaceMesh(
     else:
         frame_count = 0
     
+
     if frame_count > min_frame:
         #Closing the eyes
         counter2 = 0
@@ -158,8 +173,17 @@ with mp_face_mesh.FaceMesh(
             print(times)
             counter1 = 0
             counter2 = 0
-            
-
+    counter3 += 1
+    if counter3 == 25:
+        counter3 = 0
+        if frame_count > min_frame:
+            ref.update({
+                'state': 'Drowsy',
+            })
+        else:
+            ref.update({
+                'state': 'Awake',
+                })
 
         
     #print("Ratio: ", ratio)
