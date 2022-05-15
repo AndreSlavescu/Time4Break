@@ -73,10 +73,14 @@ a:active {
 .Video-Box {
   display: flex;
   flex-direction: column;
+  margin-left: 350px;
 }
 #video {
   background-color: black;
   border-radius: 3px;
+}
+#current_state {
+  text-align: center;
 }
 
 li {

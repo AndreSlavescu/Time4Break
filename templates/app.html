@@ -27,15 +27,8 @@
     <div class="Title"><a href="/">Time 4 Break</a></div>
 
     <div class="Main-Container">
-      <div class="Past-Suggestions">
-        <h3>Past Suggestions</h3>
-        <br />
-        <ul id="suggestions"></ul>
-      </div>
       <div class="Video-Box">
         <h3 id="current_state">Current State: Awake</h3>
-        <br />
-        <h3 id="current_sugg">Current Suggestion: None</h3>
         <br />
         <video id="video" width="600" height="300" autoplay></video>
         <div class="button">
@@ -116,6 +109,12 @@
         document.getElementById("startButton").innerHTML = isStart
           ? "Stop"
           : "Start";
+        firebase
+          .database()
+          .ref("/startState/")
+          .set({
+            startState: isStart ? "start" : "stop",
+          });
       }
       function getState() {
         var starCountRef = firebase.database().ref("state");
