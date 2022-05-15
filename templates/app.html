@@ -104,9 +104,9 @@
         console.log("IN INTERVAL");
         if (userId) {
           getSuggestions(userId);
-          getState();
-          getCurrentSuggestion();
         }
+        getState();
+        getCurrentSuggestion();
       }, 10000);
 
       var suggestions = [];
